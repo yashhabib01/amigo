@@ -9,9 +9,16 @@ const app = express();
 const connect = require("./helpers/db");
 connect();
 
+
+const corsOptions = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+};
+
 //Middlewares
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(cors());
 app.use(helmet());
 
 //Routes
@@ -31,7 +38,6 @@ const server = app.listen(PORT,() => {
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
-    origin: "https://amigo-weld.vercel.app/",
   },
 });
 
